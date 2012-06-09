@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Post:</b>
+  <%= @post.post %>
+</p>
+
+<h2>Comments</h2>
+<% @post.comments.each do |comment| %>
+  <p>
+    <b>Comment:</b>
+    <%= comment.comment %>
+  </p>
+<% end %>
+
+<h2>Add a comment:</h2>
+<%= form_for([@post, @post.comments.build]) do |f| %>
+  <div class="field">
+    <%= f.label :comment %><br />
+    <%= f.text_field :comment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
