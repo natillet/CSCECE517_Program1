@@ -19,6 +19,10 @@
     <%= f.label :password_digest, "Password" %><br />
     <%= f.password_field :password_digest %>
   </div>
+  <div class="field">
+    <%= f.label :is_admin %><br />
+    <%= f.check_box :is_admin %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

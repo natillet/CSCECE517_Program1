@@ -1,7 +1,10 @@
 <h1>Backchannel App</h1>
 <br>
-<%= render "search/form" %>
+<p>Search: <%= render "search/form" %></p>
+<br>
+
+<p>Create a New Account</p>
+<%= render "users/form" %>
 
 <br><br>
-<%= link_to 'Posts page', posts_path %>
 <%= link_to 'Statistics (admins only!)', 'statistics/index' %>

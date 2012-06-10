@@ -1,7 +1,11 @@
 <h1>Listing posts</h1>
+<br />
+<% if session[:user_id] %>
+    <%= link_to 'New Post', new_post_path %>
+    <br />
+    <br />
+<% end %>
 
 <%= render 'posts/post_table' %>
 
 <br />
-
-<%= link_to 'New Post', new_post_path %>

@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @post = Post.new
+    @user = User.new
 
     respond_to do |format|
       format.html # new.html.erb

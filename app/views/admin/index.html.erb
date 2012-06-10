@@ -1,2 +1,9 @@
 <h1>Welcome to being logged in, <%= User.find_by_id(session[:user_id]).name %></h1>
-<%= session[:user_id] %>
+You are user number <%= session[:user_id] %>!
+
+<p>
+  Create a New User:
+    <%= render "users/form_admin" %>
+</p>
+
+<%= link_to 'Statistics (admins only!)', 'statistics/index' %>
