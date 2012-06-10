@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
   def authorize_admin
     admin = User.find_by_id(session[:user_id])
-    unless admin and admin.is_admin?
+    unless (admin.is_admin?)
       redirect_to home_url
     end
   end
