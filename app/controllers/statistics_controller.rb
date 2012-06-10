@@ -1,4 +1,6 @@
 class StatisticsController < ApplicationController
+  skip_before_filter :authorize_admin
+
   def index
     @posts = Post.all
     @average_number_comments_per_post = 0.0
