@@ -2,3 +2,7 @@
   <b>Comment:</b>
   <%= comment.comment %>
 </p>
+<p>
+  <b>By:</b>
+  <%= User.find(comment.user_id).name %>
+</p>

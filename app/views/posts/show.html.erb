@@ -4,6 +4,10 @@
   <b>Post:</b>
   <%= @post.post %>
 </p>
+<p>
+  <b>By:</b>
+  <%= User.find(@post.user_id).name %>
+</p>
 
 <h2>Comments</h2>
 <%= render @post.comments  %>

@@ -10,4 +10,8 @@ class Post < ActiveRecord::Base
       find(:all)
     end
   end
+
+  def get_posted_by_name(post)
+    User.find_by_id(post.user_id).name
+  end
 end
