@@ -1,9 +1,11 @@
 CSCECE517Program1::Application.routes.draw do
+
   get "search/index"
 
   get "statistics/index"
 
   get "home/index"
+  get 'home' => 'home#index'
 
   resources :posts do
     resources :comments
