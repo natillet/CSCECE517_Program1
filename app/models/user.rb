@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   attr_accessible :is_admin, :name, :password_digest
   validates :name, :uniqueness => true, :presence => true
-  has_many :posts
-  has_many :comments
+  has_many :posts, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
   before_save :encrypt_password
 
   public
