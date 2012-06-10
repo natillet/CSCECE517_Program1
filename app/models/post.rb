@@ -1,6 +1,7 @@
 class Post < ActiveRecord::Base
   attr_accessible :post
   has_many :comments, :dependent => :destroy
+  belongs_to :user
 
   def self.search(search)
     if search
