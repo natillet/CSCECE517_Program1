@@ -1,6 +1,6 @@
 CSCECE517Program1::Application.routes.draw do
   #get "admin/index"
-  get 'admin' => 'admin:index'
+  get 'admin' => 'admin#index'
 
   #get "sessions/new"
   #

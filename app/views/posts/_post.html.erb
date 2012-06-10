@@ -1,5 +1,6 @@
 
   <tr>
+    <td><%= User.find_by_id(post.user_id) %></td>
     <td><%= post.post %></td>
     <td><%= post.comments.count %></td>
     <td><%= link_to 'Show', post %></td>

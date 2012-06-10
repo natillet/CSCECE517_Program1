@@ -7,11 +7,11 @@ class User < ActiveRecord::Base
 
   public
   def match_password(submitted_password)
-    password == encrypt(submitted_password)
+    password_digest == encrypt(submitted_password)
   end
 
-  def self.authenticate(username, submitted_password)
-    user = User.find_by_username(username)
+  def authenticate(username, submitted_password)
+    user = User.find_by_name(username)
     return nil  if user.nil?
     return user if user.match_password(submitted_password)
   end
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   private
 
   def encrypt_password
-    self.password = encrypt(password)
+    self.password_digest = encrypt(password_digest)
   end
 
   def secure_hash(string)
