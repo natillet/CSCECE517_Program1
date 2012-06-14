@@ -4,14 +4,15 @@ class Post < ActiveRecord::Base
   belongs_to :user
 
   def self.search(search)
-    if search
+   if search
       find(:all, :conditions => ['post LIKE ?', "%#{search}%"])
-    else
-      find(:all)
+   else
+      #find(:all)
     end
   end
 
   def get_posted_by_name(post)
     User.find_by_id(post.user_id).name
   end
+
 end
