@@ -9,9 +9,13 @@
 <body>
 <%= link_to 'Home', home_url %> | <%= link_to 'Posts', posts_url %> |
 <%= link_to 'Users', users_url %>
-<% if session[:user_id] %><%= button_to 'Logout', logout_path, :method => :delete %>
+<% if session[:user_id] %>
+  <% if User.find_by_id(session[:user_id]).is_admin? %>
+    | <%= link_to 'Admin', admin_url %>
+  <% end %>
+  <%= button_to 'Logout', logout_path, :method => :delete %>
 <% else %>
-| <%= link_to 'Login', login_path %>
+  | <%= link_to 'Login', login_path %>
 <% end %>
 
 
