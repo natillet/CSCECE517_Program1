@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_filter :authorize_user, :only => [:new, :create]
-  skip_before_filter :authorize_admin, :only => [:new, :create]
+  skip_before_filter :authorize_user, :only => [:new, :create, :show]
+  skip_before_filter :authorize_admin, :only => [:new, :create, :show]
   # GET /users
   # GET /users.json
   def index
@@ -16,6 +16,9 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @num_posts = @user.get_number_of_posts
+    @num_comments = @user.get_number_of_comments
+    @posts = Post.where(:user_id => @user.id)
 
     respond_to do |format|
       format.html # show.html.erb

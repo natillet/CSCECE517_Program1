@@ -1,20 +1,18 @@
 <p id="notice"><%= notice %></p>
+<% if session[:user_id] %>
+  <% if User.find_by_id(session[:user_id]).is_admin? %>
+    <h2>Stats for <%= @user.name %></h2>
 
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
+    <p>Total posts: <%= @num_posts %></p>
 
-<p>
-  <b>Password digest:</b>
-  <%= @user.password_digest %>
-</p>
+    <p>Total comments: <%= @num_comments %> </p>
 
-<p>
-  <b>Is admin:</b>
-  <%= @user.is_admin %>
-</p>
+    <p>Average comments received per post: TBD </p>
+  <% end %>
+<% end %>
 
+<h1>Posts by <%= @user.name %></h1>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= render 'posts/post_table' %>
+
 <%= link_to 'Back', users_path %>

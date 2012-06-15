@@ -24,6 +24,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def get_number_of_posts
+    Post.where(:user_id => id).count
+  end
+  def get_number_of_comments
+    Comment.where(:user_id => id).count
+  end
+
   private
 
   def encrypt_password
