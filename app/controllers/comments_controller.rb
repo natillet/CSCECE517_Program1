@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  skip_before_filter :authorize_user, :only => [:index, :show]
+  skip_before_filter :authorize_admin
   # GET /comments
   # GET /comments.json
   def index

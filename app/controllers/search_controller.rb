@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  skip_before_filter :authorize_user
+  skip_before_filter :authorize_admin
   def index
     #@comments = Comment.search(params[:search])
     #@posts = Post.search(params[:search])

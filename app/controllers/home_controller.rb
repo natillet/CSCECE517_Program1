@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  skip_before_filter :authorize_user
+  skip_before_filter :authorize_admin
   def index
     @user = User.new
 

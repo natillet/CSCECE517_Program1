@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  skip_before_filter :authorize_user, :only => [:index, :show]
+  skip_before_filter :authorize_admin
   # GET /posts
   # GET /posts.json
   def index
