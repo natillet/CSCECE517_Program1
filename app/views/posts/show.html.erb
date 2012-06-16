@@ -1,14 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Post:</b>
-  <%= @post.post %>
-</p>
-<p>
-  <b>By:</b>
-  <%= User.find(@post.user_id).name %>
-</p>
+<h1><%= User.find(@post.user_id).name %> says: <%= @post.post %></h1>
 
+<br />
 <h2>Comments</h2>
 <%= render @post.comments  %>
 
