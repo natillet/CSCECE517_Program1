@@ -13,7 +13,7 @@ class SearchController < ApplicationController
     @query = params[:search]
     if !@query or @query == ""
       flash[:error] = "Search query cannot be empty"
-      redirect_to :controller => 'home', :action => 'index'
+      redirect_to home_url
     end
 
     if params[:searchby][:searchbyid] == "1"

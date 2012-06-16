@@ -2,9 +2,10 @@
   <b><%= User.find(comment.user_id).name %> responded: </b>
   <%= comment.comment %>
   <% if session[:user_id] %>
-  <% if User.find_by_id(session[:user_id]).is_admin? %>
-    <%= link_to "Delete", post_comment_path(@post, comment), :confirm => "Are you sure?", :method => :delete %>
+    <% post = Post.find_by_id(comment.post_id) %>
+    <% if User.find_by_id(session[:user_id]).is_admin? %>
+      <%= link_to "Delete", post_comment_path(post, comment), :confirm => "Are you sure?", :method => :delete %>
+    <% end %>
   <% end %>
-<% end %>
 </p>
 
