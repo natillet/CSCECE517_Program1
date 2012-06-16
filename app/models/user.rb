@@ -1,4 +1,8 @@
+
+
 class User < ActiveRecord::Base
+after_destroy :ensure_an_admin_remains
+
   attr_accessible :is_admin, :name, :password_digest
   validates :name, :uniqueness => true, :presence => true
   has_many :posts, :dependent => :destroy
@@ -44,5 +48,15 @@ class User < ActiveRecord::Base
   def encrypt(string)
     secure_hash(string)
   end
+
+   def ensure_an_admin_remains
+
+      if User.where(:is_admin => true).count.zero?
+
+       raise "cant delete user"
+
+
+     end
+   end
 
 end
