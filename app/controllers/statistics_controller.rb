@@ -1,12 +1,11 @@
 class StatisticsController < ApplicationController
   def index
     @posts = Post.all
-    @average_number_comments_per_post = 0.0
-    number_of_posts = Post.count
-    @posts.each do |post|
-      @average_number_comments_per_post += post.comments.count
-    end
-    @average_number_comments_per_post /= number_of_posts
+    @users = User.all
+
+    @average_number_comments_per_post = (Comment.count * 1.0 / Post.count)
+    @average_number_posts_per_user = (Post.count * 1.0 / User.count)
+
 
   end
 end

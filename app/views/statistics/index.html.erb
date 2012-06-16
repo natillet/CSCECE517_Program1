@@ -2,7 +2,7 @@
 <p>Total number of users: <%= User.count %></p>
 <p>Total number of posts: <%= Post.count %></p>
 <p>Total number of comments: <%= Comment.count %></p>
-<p>Average number of posts per user: (TBD)</p>
+<p>Average number of posts per user: <%= @average_number_posts_per_user %></p>
 <p>Average number of comments per post: <%= @average_number_comments_per_post %></p>
 <p>See more details per user in each users page!</p>
 
