@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   skip_before_filter :authorize_user, :only => [:index, :show]
-  skip_before_filter :authorize_admin
+  skip_before_filter :authorize_admin, :except => [:edit, :destroy]
   # GET /comments
   # GET /comments.json
   def index
@@ -94,7 +94,7 @@ class CommentsController < ApplicationController
     @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to comments_url }
+      format.html { redirect_to post_comments_url }
       format.json { head :no_content }
     end
   end

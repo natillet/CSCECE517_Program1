@@ -10,7 +10,18 @@
 </p>
 
 <h2>Comments</h2>
-<%= render @post.comments  %>
+<% @post.comments.each do |comment| %>
+<p>
+  <b>Comment:</b>
+  <%= comment.comment %>
+</p>
+<p>
+  <b>By:</b>
+  <%= User.find(comment.user_id).name %>
+</p>
+
+<%= link_to "Delete", post_comment_path(@post, comment), :confirm => "Are you sure?", :method => :delete %>
+<% end %>
 
 <% if session[:user_id] %>
 <h2>Add a comment:</h2>
