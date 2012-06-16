@@ -1,7 +1,7 @@
 <%= form_tag 'search/index', :method => 'get' do %>
     <p>
       <%= text_field_tag :search, params[:search], :placeholder => 'Search' %>
-      <%= select(:searchby, :searchbyid, [['by Content', 1], ['by Username', 2]]) %>
+      <%= select(:searchby, :searchbyid, [['by Username', 1], ['by Post', 2],['by Comment', 3]]) %>
       <%= submit_tag "Search", :name => nil %>
     </p>
 <% end %>

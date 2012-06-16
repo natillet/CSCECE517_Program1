@@ -17,9 +17,11 @@ class SearchController < ApplicationController
     end
 
     if params[:searchby][:searchbyid] == "1"
-          @posts = Post.search(params[:search])
+        @users = User.search(params[:search])
     elsif params[:searchby][:searchbyid] == "2"
-           @users = User.search(params[:search])
+        @posts = Post.search(params[:search])
+    elsif params[:searchby][:searchbyid] == "3"
+        @comments = Comment.search(params[:search])
       end
 
   end

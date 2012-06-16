@@ -8,6 +8,9 @@
     <%= render 'users/user_table' %>
 <% end %>
 
+<% if @comments %>
+    <%= render @comments %>
+<% end %>
 
 <br>
 <%= link_to "Home", home_url %>
