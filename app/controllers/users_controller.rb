@@ -44,7 +44,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    redirect_to home_url, :notice => "Editing of users is forbidden"
   end
 
   # POST /users
