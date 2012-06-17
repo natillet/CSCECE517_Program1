@@ -91,6 +91,14 @@ describe "Users" do
       @admin_password = "admin"
       @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
     end
+    it "fails to delete a user when not logged in" do
+      visit users_path
+      within('tr', :text => "#{@user.name}") do
+        click_link "Destroy"
+      end
+      current_path.should == home_path
+      page.should have_content "Please log in"
+    end
     it "fails to delete a user when not an admin" do
       visit login_path
       fill_in "Name", :with => (@user.name)
@@ -98,7 +106,10 @@ describe "Users" do
       click_button "Login"
       current_path.should == posts_path
       visit users_path
-      current_path.should == home_path  #will be redirected,
+      within('tr', :text => "#{@user.name}") do
+        click_link "Destroy"
+      end
+      current_path.should == home_path
       page.should have_content "Sorry, you do not have clearance"
     end
 
@@ -109,11 +120,11 @@ describe "Users" do
       click_button "Login"
       current_path.should == admin_path
       visit posts_path
-      within('tr', :text => "#{@post.post}") do
+      within('tr', :text => "#{@user.name}") do
         click_link "Destroy"
       end
       current_path.should == posts_path
-      page.should have_no_content(@post.post)
+      page.should have_no_content(@user.name)
 
     end
 
@@ -124,26 +135,27 @@ describe "Users" do
       click_button "Login"
       current_path.should == admin_path
       visit posts_path
-      within('tr', :text => "#{@post.post}") do
+      within('tr', :text => "#{@admin_user.name}") do
         click_link "Destroy"
       end
-      current_path.should == posts_path
-      page.should have_no_content(@post.post)
+      current_path.should == users_path
+      page.should have_content "Cannot delete last remaining administrator"
 
     end
 
     it "logs out admin who deletes himself (only allowed by admins)" do
+      @admin_user2 = User.create :name => "admin2", :password_digest => "admin", :is_admin => true
       visit login_path
       fill_in "Name", :with => (@admin_user.name)
       fill_in "Password", :with => (@admin_password)
       click_button "Login"
       current_path.should == admin_path
       visit posts_path
-      within('tr', :text => "#{@post.post}") do
+      within('tr', :text => "#{@admin_user.name}") do
         click_link "Destroy"
       end
       current_path.should == posts_path
-      page.should have_no_content(@post.post)
+      page.should have_content "User #{@admin_user.name} deleted"
 
     end
   end
