@@ -47,43 +47,37 @@ describe "Users" do
   end
 
   describe "PUT /users" do
-    #before do
-    #  @admin_password = "admin"
-    #  @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
-    #end
-    #it "fails to edit a post when not an admin" do
-    #  visit login_path
-    #  fill_in "Name", :with => (@user.name)
-    #  fill_in "Password", :with => (@password)
-    #  click_button "Login"
-    #  current_path.should == posts_path
-    #  visit posts_path
-    #  within('tr', :text => "#{@post.post}") do
-    #    click_link "Edit"
-    #  end
-    #  current_path.should == home_path
-    #  page.should have_content "Sorry, you do not have clearance"
-    #end
-    #
-    #it "edits a post (only allowed by admins)" do
-    #  visit login_path
-    #  fill_in "Name", :with => (@admin_user.name)
-    #  fill_in "Password", :with => (@admin_password)
-    #  click_button "Login"
-    #  current_path.should == admin_path
-    #  visit posts_path
-    #  within('tr', :text => "#{@post.post}") do
-    #    click_link "Edit"
-    #  end
-    #  current_path.should == edit_post_path(@post)
-    #  find_field('Post').value.should == (@post.post)
-    #
-    #  fill_in 'Post', :with => "Updated post"
-    #  click_button 'Update Post'
-    #
-    #  page.should have_content "Updated post"
-    #
-    #end
+    before do
+      @admin_password = "admin"
+      @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
+    end
+    it "fails to edit a user when not logged in" do
+      visit "/users/1/edit"
+      current_path.should == home_path
+      page.should have_content "Please log in"
+    end
+    it "fails to delete a user when not an admin" do
+      visit login_path
+      fill_in "Name", :with => (@user.name)
+      fill_in "Password", :with => (@password)
+      click_button "Login"
+      current_path.should == posts_path
+      visit "/users/1/edit"
+      current_path.should == home_path
+      page.should have_content "Sorry, you do not have clearance"
+    end
+
+    it "deletes a user (only allowed by admins)" do
+      visit login_path
+      fill_in "Name", :with => (@admin_user.name)
+      fill_in "Password", :with => (@admin_password)
+      click_button "Login"
+      current_path.should == admin_path
+      visit "/users/1/edit"
+      current_path.should == home_path
+      page.should have_content "Editing of users is forbidden"
+
+    end
   end
 
   describe "DELETE /users" do
