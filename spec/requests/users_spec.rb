@@ -4,17 +4,13 @@ describe "Users" do
   before do
     @password = "elene"
     @user = User.create :name => "elene", :password_digest => (@password), :is_admin => false
-    @post = Post.new
-    @post.post = "Example post"
-    @post.user_id = @user.id
-    @post.save
   end
 
   describe "GET /users" do
 
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get posts_path
+      get users_path
       response.status.should be(200)
     end
 
@@ -108,12 +104,12 @@ describe "Users" do
       fill_in "Password", :with => (@admin_password)
       click_button "Login"
       current_path.should == admin_path
-      visit posts_path
+      visit users_path
       within('tr', :text => "#{@user.name}") do
         click_link "Destroy"
       end
-      current_path.should == posts_path
-      page.should have_no_content(@user.name)
+      current_path.should == users_path
+      page.should have_content "User #{@user.name} deleted"
 
     end
 
