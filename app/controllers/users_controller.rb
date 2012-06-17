@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_filter :authorize_user, :only => [:new, :create, :show]
-  skip_before_filter :authorize_admin, :only => [:new, :create, :show]
+  skip_before_filter :authorize_user, :only => [:new, :create, :show, :index]
+  skip_before_filter :authorize_admin, :only => [:new, :create, :show, :index]
   # GET /users
   # GET /users.json
   def index
@@ -19,6 +19,11 @@ class UsersController < ApplicationController
     @num_posts = @user.get_number_of_posts
     @num_comments = @user.get_number_of_comments
     @posts = Post.where(:user_id => @user.id)
+    @avg_rcvd_comments_per_post = 0.0
+    @posts.each do |post|
+      @avg_rcvd_comments_per_post += post.comments.count
+    end
+    @avg_rcvd_comments_per_post /= @posts.count
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,7 +44,8 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    redirect_to home_url, :notice => "Editing of users is forbidden"
   end
 
   # POST /users

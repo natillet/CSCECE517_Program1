@@ -55,7 +55,7 @@ after_destroy :ensure_an_admin_remains
 
       if User.where(:is_admin => true).count.zero?
 
-       raise "cant delete user"
+       raise "Cannot delete last remaining administrator"
 
 
      end
