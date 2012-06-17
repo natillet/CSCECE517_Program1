@@ -22,40 +22,35 @@ describe User do
   end
 
   it "allows access to user name attribute" do
-    user = User.new(name: 'Neelam')
+    user = User.new(:name => 'Neelam')
     user.name.should eq('Neelam')
   end
 
   it "allows access to the password attributes" do
-    user = User.new(
-        name: 'Neelam',
-        password_digest: 'neelam',
-    )
+    user = User.new(:name => 'Neelam', :password_digest => 'neelam')
     user.password_digest.should eq('neelam')
   end
 
   it "allows access to is admin attribute" do
-    user = User.new(is_admin: true)
+    user = User.new(:is_admin => true)
     user.is_admin.should eq(true)
   end
 
   it "validates presence of user name attribute" do
-    user = User.new(
-        password_digest: 'neelam'
-    )
+    user = User.new(:password_digest => 'neelam')
     user.save
     user.should have(1).errors_on(:name)
   end
 
   it "validates uniqueness of user name attribute" do
     user = User.new(
-        name: 'Neelam',
-        password_digest: 'neelam'
+        :name => 'Neelam',
+        :password_digest => 'neelam'
     )
     user.save
     user2 = User.new(
-        name: 'Neelam',
-        password_digest: 'neelam'
+        :name => 'Neelam',
+        :password_digest => 'neelam'
     )
     user2.should have(1).errors_on(:name)
   end
