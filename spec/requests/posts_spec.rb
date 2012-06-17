@@ -1,16 +1,19 @@
+require 'spec_helper'
+
 describe "Posts" do
   before do
-    @user = User.create :name => "elene", :password_digest => "elene", :is_admin => false
-    #@post = Post.create :post => "A post"
-    #@post.user_id = @user.id
+    @password = "elene"
+    @user = User.create :name => "elene", :password_digest => (@password), :is_admin => false
   end
 
   describe "GET /posts" do
     before do
       @post = Post.new
-      @post.post = "New post"
+      @post.post = "Example post"
       @post.user_id = @user.id
+      @post.save
     end
+
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       get posts_path
@@ -19,20 +22,25 @@ describe "Posts" do
 
     it "display some posts" do
       visit posts_path
-      page.should have_content "New post"
+      page.should have_content(@post.post)
     end
 
-  #  it "creates a new post" do
-  #    visit posts_path
-  #    click_link "New Post"
-  #    current_path.should == new_post_path
-  #    fill_in "Post", :with => "Something green"
-  #    click_button 'Create Post'
-  #    #current_path.should == root_path #for if we decide to redirect to root
-  #    page.should have_content "Something green"
-  #  end
+    it "logs in and creates a new post" do
+      visit login_path
+      fill_in "Name", :with => (@user.name)
+      fill_in "Password", :with => (@password)
+      click_button "Login"
+      page.should have_content "User #{@user.name} is logged in!"
+      visit posts_path
+      click_link "New Post"
+      current_path.should == new_post_path
+      fill_in "Post", :with => "Something green"
+      click_button 'Create Post'
+      #current_path.should == root_path #for if we decide to redirect to root
+      page.should have_content "Something green"
+    end
   end
-  #
+
   #describe "PUT /posts" do
   #  it "edits a post" do
   #    visit posts_path
