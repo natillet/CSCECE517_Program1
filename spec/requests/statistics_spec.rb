@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Statistics" do
   before do
-    @password = "admin"
+    @password = "admin_pass"
     @user_admin = User.create :name => "admin", :password_digest => (@password), :is_admin => true
     @user_reg = User.create :name => "elene", :password_digest => (@password), :is_admin => false
   end

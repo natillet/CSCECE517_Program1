@@ -23,7 +23,7 @@ describe "Search" do
     end
 
     it "submits a user search" do
-      @user = User.create :name => "elene", :password_digest => "elene", :is_admin => false
+      @user = User.create :name => "elene", :password_digest => "elene_pass", :is_admin => false
       visit home_path
       fill_in "search", :with => "en"
       page.select("by Username", :from => "searchby_searchbyid")
@@ -33,7 +33,7 @@ describe "Search" do
     end
 
     it "submits a post search" do
-      @user = User.create :name => "elene", :password_digest => "elene", :is_admin => false
+      @user = User.create :name => "elene", :password_digest => "elene_pass", :is_admin => false
       @post = Post.new
       @post.post = "Inspector Gadget here!"
       @post.user_id = @user.id
@@ -47,7 +47,7 @@ describe "Search" do
     end
 
     it "submits a comment search" do
-      @user = User.create :name => "elene", :password_digest => "elene", :is_admin => false
+      @user = User.create :name => "elene", :password_digest => "elene_pass", :is_admin => false
       @post = Post.new
       @post.post = "Inspector Gadget here!"
       @post.user_id = @user.id

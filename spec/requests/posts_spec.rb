@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Posts" do
   before do
-    @password = "elene"
+    @password = "elene_pass"
     @user = User.create :name => "elene", :password_digest => (@password), :is_admin => false
     @post = Post.new
     @post.post = "Example post"
@@ -48,7 +48,7 @@ describe "Posts" do
 
   describe "PUT /posts" do
     before do
-      @admin_password = "admin"
+      @admin_password = "admin_pass"
       @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
     end
     it "fails to edit a post when not an admin" do
@@ -88,7 +88,7 @@ describe "Posts" do
 
   describe "DELETE /posts" do
     before do
-      @admin_password = "admin"
+      @admin_password = "admin_pass"
       @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
     end
     it "fails to delete a post when not an admin" do

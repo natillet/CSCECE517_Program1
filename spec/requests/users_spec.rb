@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Users" do
   before do
-    @password = "elene"
+    @password = "elene_pass"
     @user = User.create :name => "elene", :password_digest => (@password), :is_admin => false
   end
 
@@ -39,7 +39,7 @@ describe "Users" do
 
   describe "PUT /users" do
     before do
-      @admin_password = "admin"
+      @admin_password = "admin_pass"
       @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
     end
     it "fails to edit a user when not logged in" do
@@ -73,7 +73,7 @@ describe "Users" do
 
   describe "DELETE /users" do
     before do
-      @admin_password = "admin"
+      @admin_password = "admin_pass"
       @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
     end
     it "fails to delete a user when not logged in" do
@@ -129,7 +129,7 @@ describe "Users" do
     end
 
     it "logs out admin who deletes himself (only allowed by admins)" do
-      @admin_user2 = User.create :name => "admin2", :password_digest => "admin", :is_admin => true
+      @admin_user2 = User.create :name => "admin2", :password_digest => "admin_pass", :is_admin => true
       visit login_path
       fill_in "Name", :with => (@admin_user.name)
       fill_in "Password", :with => (@admin_password)

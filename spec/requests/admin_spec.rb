@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Admin" do
   before do
-    @password = "admin"
+    @password = "admin_pass"
     @user = User.create :name => "admin", :password_digest => (@password), :is_admin => true
   end
 
