@@ -7,6 +7,6 @@
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 
 
-admin = User.create(:name => "admin4",
-            :password_digest => "admin",
+admin = User.create(:name => "admin",
+            :password_digest => "admin_pass",
             :is_admin => true)
