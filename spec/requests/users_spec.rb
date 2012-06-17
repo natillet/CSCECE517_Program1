@@ -19,30 +19,25 @@ describe "Users" do
     end
 
     it "displays some users" do
-      visit posts_path
-      page.should have_content(@post.post)
+      visit users_path
+      page.should have_content(@user.name)
     end
 
     it "displays a user's show page" do
-      visit posts_path
-      within('tr', :text => "#{@post.post}") do
+      visit users_path
+      within('tr', :text => "#{@user.name}") do
         click_link "Show"
       end
-      page.should have_content(@post.post)
+      page.should have_content(@user.name)
     end
 
     it "logs in and creates a new user" do
-      visit login_path
-      fill_in "Name", :with => (@user.name)
-      fill_in "Password", :with => (@password)
-      click_button "Login"
-      page.should have_content "User #{@user.name} is logged in!"
-      visit posts_path
-      click_link "New Post"
-      current_path.should == new_post_path
-      fill_in "Post", :with => "Something green"
-      click_button 'Create Post'
-      page.should have_content "Something green"
+      visit users_path
+      click_link "New User"
+      fill_in "Name", :with => "new_user"
+      fill_in "Password", :with => "new_user"
+      click_button "Create User"
+      page.should have_content "User was successfully created"
     end
   end
 
@@ -56,7 +51,7 @@ describe "Users" do
       current_path.should == home_path
       page.should have_content "Please log in"
     end
-    it "fails to delete a user when not an admin" do
+    it "fails to edit a user when not an admin" do
       visit login_path
       fill_in "Name", :with => (@user.name)
       fill_in "Password", :with => (@password)
@@ -67,7 +62,7 @@ describe "Users" do
       page.should have_content "Sorry, you do not have clearance"
     end
 
-    it "deletes a user (only allowed by admins)" do
+    it "fails to edit user, even as admin" do
       visit login_path
       fill_in "Name", :with => (@admin_user.name)
       fill_in "Password", :with => (@admin_password)
