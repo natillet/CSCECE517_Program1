@@ -5,6 +5,8 @@ after_destroy :ensure_an_admin_remains
 
   attr_accessible :is_admin, :name, :password_digest
   validates :name, :uniqueness => true, :presence => true
+  validates :password_digest, :presence => true
+  validates_length_of :password_digest, :in => (6..12)
   has_many :posts, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   before_save :encrypt_password
