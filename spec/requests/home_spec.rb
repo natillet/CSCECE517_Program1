@@ -31,7 +31,12 @@ describe "Home" do
     end
 
     it "creates a user from the home page" do
-      pending
+      visit home_path
+      fill_in "Name", :with => "new_person"
+      fill_in "Password", :with => "secret"
+      click_button "Create User"
+      visit users_path
+      page.should have_content "new_person"
     end
 
   end

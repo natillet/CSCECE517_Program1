@@ -134,7 +134,7 @@ describe "Users" do
       fill_in "Password", :with => (@admin_password)
       click_button "Login"
       current_path.should == admin_path
-      visit posts_path
+      visit users_path
       within('tr', :text => "#{@admin_user.name}") do
         click_link "Destroy"
       end
@@ -150,12 +150,13 @@ describe "Users" do
       fill_in "Password", :with => (@admin_password)
       click_button "Login"
       current_path.should == admin_path
-      visit posts_path
+      visit users_path
       within('tr', :text => "#{@admin_user.name}") do
         click_link "Destroy"
       end
-      current_path.should == posts_path
+      current_path.should == users_path
       page.should have_content "User #{@admin_user.name} deleted"
+      page.should have_link "Login"
 
     end
   end
