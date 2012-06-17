@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe "Search" do
-  #before do
-  #  @password = "admin"
-  #  @user = User.create :name => "admin", :password_digest => (@password), :is_admin => true
-  #end
 
   describe "GET /search" do
     it "works! (now write some real specs)" do
