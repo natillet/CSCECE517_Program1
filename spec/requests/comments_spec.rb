@@ -46,18 +46,18 @@ describe "Comments" do
       @admin_password = "admin"
       @admin_user = User.create :name => "admin", :password_digest => (@admin_password), :is_admin => true
     end
-    it "fails to delete a comment when not an admin" do
+    it "gives no option to delete a comment when not an admin" do
       visit login_path
       fill_in "Name", :with => (@user.name)
       fill_in "Password", :with => (@password)
       click_button "Login"
       current_path.should == posts_path
       visit posts_path
-      within('p', :text => "#{@comment.comment}") do
-        click_link "Delete"
+      within('tr', :text => "#{@post.post}") do
+        click_link "Show"
       end
-      current_path.should == home_path
-      page.should have_content "Sorry, you do not have clearance"
+      current_path.should == post_path(@post)
+      page.has_no_link?("Delete").should be_true
     end
 
     it "deletes a comment (only allowed by admins)" do
@@ -67,6 +67,10 @@ describe "Comments" do
       click_button "Login"
       current_path.should == admin_path
       visit posts_path
+      within('tr', :text => "#{@post.post}") do
+        click_link "Show"
+      end
+      current_path.should == post_path(@post)
       within('p', :text => "#{@comment.comment}") do
         click_link "Delete"
       end

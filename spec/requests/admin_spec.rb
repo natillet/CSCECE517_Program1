@@ -21,6 +21,29 @@ describe "Admin" do
       current_path.should == admin_path
       page.should have_content "Welcome to being logged in, #{@user.name}"
     end
+
+    it "shows user creation fields" do
+      visit login_path
+      fill_in "Name", :with => (@user.name)
+      fill_in "Password", :with => (@password)
+      click_button "Login"
+      current_path.should == admin_path
+      page.should have_content "Welcome to being logged in, #{@user.name}"
+      page.should have_field "Name"
+      page.should have_field "Password"
+      page.should have_unchecked_field "user_is_admin"
+      page.should have_button "Create User"
+    end
+
+    it "has link to statistics" do
+      visit login_path
+      fill_in "Name", :with => (@user.name)
+      fill_in "Password", :with => (@password)
+      click_button "Login"
+      current_path.should == admin_path
+      page.should have_content "Welcome to being logged in, #{@user.name}"
+      page.should have_link "Statistics (admins only!)"
+    end
   end
 
 end
