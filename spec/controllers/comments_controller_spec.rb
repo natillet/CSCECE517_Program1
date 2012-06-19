@@ -91,100 +91,120 @@ describe CommentsController do
     end
   end
 
-  #describe "POST create" do
-  #  describe "with valid params" do
-  #    it "creates a new Comment" do
-  #      expect {
-  #        post :create, {:comment => valid_comment_attributes}, valid_session
-  #      }.to change(Comment, :count).by(1)
-  #    end
-  #
-  #    it "assigns a newly created comment as @comment" do
-  #      post :create, {:comment => valid_comment_attributes}, valid_session
-  #      assigns(:comment).should be_a(Comment)
-  #      assigns(:comment).should be_persisted
-  #    end
-  #
-  #    it "redirects to the created comment" do
-  #      post :create, {:comment => valid_comment_attributes}, valid_session
-  #      response.should redirect_to(Comment.last)
-  #    end
-  #  end
-  #
-  #  describe "with invalid params" do
-  #    it "assigns a newly created but unsaved comment as @comment" do
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      Comment.any_instance.stub(:save).and_return(false)
-  #      post :create, {:comment => {}}, valid_session
-  #      assigns(:comment).should be_a_new(Comment)
-  #    end
-  #
-  #    it "re-renders the 'new' template" do
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      Comment.any_instance.stub(:save).and_return(false)
-  #      post :create, {:comment => {}}, valid_session
-  #      response.should render_template("new")
-  #    end
-  #  end
-  #end
+  describe "POST create" do
+    describe "with valid params" do
+      it "creates a new Comment" do
+        User.create! valid_user_attributes
+        a_post = Post.create! valid_post_attributes
+        expect {
+          post :create, {:comment => valid_comment_attributes, :post_id => a_post.id}, valid_session
+        }.to change(Comment, :count).by(1)
+      end
 
-  #describe "PUT update" do
-  #  describe "with valid params" do
-  #    it "updates the requested comment" do
-  #      comment = Comment.create! valid_comment_attributes
-  #      # Assuming there are no other comments in the database, this
-  #      # specifies that the Comment created on the previous line
-  #      # receives the :update_attributes message with whatever params are
-  #      # submitted in the request.
-  #      Comment.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-  #      put :update, {:id => comment.to_param, :comment => {'these' => 'params'}}, valid_session
-  #    end
-  #
-  #    #it "assigns the requested comment as @comment" do
-  #    #  comment = Comment.create! valid_comment_attributes
-  #    #  put :update, {:id => comment.to_param, :comment => valid_comment_attributes}, valid_session
-  #    #  assigns(:comment).should eq(comment)
-  #    #end
-  #    #
-  #    #it "redirects to the comment" do
-  #    #  comment = Comment.create! valid_comment_attributes
-  #    #  put :update, {:id => comment.to_param, :comment => valid_comment_attributes}, valid_session
-  #    #  response.should redirect_to(comment)
-  #    #end
-  #  end
-  #
-  #  describe "with invalid params" do
-  #    it "assigns the comment as @comment" do
-  #      comment = Comment.create! valid_comment_attributes
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      Comment.any_instance.stub(:save).and_return(false)
-  #      put :update, {:id => comment.to_param, :comment => {}}, valid_session
-  #      assigns(:comment).should eq(comment)
-  #    end
-  #
-  #    it "re-renders the 'edit' template" do
-  #      comment = Comment.create! valid_comment_attributes
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      Comment.any_instance.stub(:save).and_return(false)
-  #      put :update, {:id => comment.to_param, :comment => {}}, valid_session
-  #      response.should render_template("edit")
-  #    end
-  #  end
-  #end
+      it "assigns a newly created comment as @comment" do
+        User.create! valid_user_attributes
+        a_post = Post.create! valid_post_attributes
+        post :create, {:comment => valid_comment_attributes, :post_id => a_post.id}, valid_session
+        assigns(:comment).should be_a(Comment)
+        assigns(:comment).should be_persisted
+      end
 
-  #describe "DELETE destroy" do
-  #  it "destroys the requested comment" do
-  #    comment = Comment.create! valid_comment_attributes
-  #    expect {
-  #      delete :destroy, {:id => comment.to_param}, valid_session
-  #    }.to change(Comment, :count).by(-1)
-  #  end
-  #
-  #  it "redirects to the comments list" do
-  #    comment = Comment.create! valid_comment_attributes
-  #    delete :destroy, {:id => comment.to_param}, valid_session
-  #    response.should redirect_to(comments_url)
-  #  end
-  #end
+      it "redirects to the post for the created comment" do
+        User.create! valid_user_attributes
+        a_post = Post.create! valid_post_attributes
+        post :create, {:comment => valid_comment_attributes, :post_id => a_post.id}, valid_session
+        #response.should redirect_to(Comment.last)
+        response.should redirect_to(a_post)
+      end
+    end
+
+    #No invalid params for comments (they can be null)
+    #describe "with invalid params" do
+    #  it "assigns a newly created but unsaved comment as @comment" do
+    #    # Trigger the behavior that occurs when invalid params are submitted
+    #    Comment.any_instance.stub(:save).and_return(false)
+    #    post :create, {:comment => {}}, valid_session
+    #    assigns(:comment).should be_a_new(Comment)
+    #  end
+    #
+    #  it "re-renders the 'new' template" do
+    #    # Trigger the behavior that occurs when invalid params are submitted
+    #    Comment.any_instance.stub(:save).and_return(false)
+    #    post :create, {:comment => {}}, valid_session
+    #    response.should render_template("new")
+    #  end
+    #end
+  end
+
+  describe "PUT update" do
+    describe "with valid params" do
+      it "updates the requested comment" do
+        User.create! valid_user_attributes
+        Post.create! valid_post_attributes
+        comment = Comment.create! valid_comment_attributes
+        # Assuming there are no other comments in the database, this
+        # specifies that the Comment created on the previous line
+        # receives the :update_attributes message with whatever params are
+        # submitted in the request.
+        Comment.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        put :update, {:id => comment.to_param, :comment => {'these' => 'params'}}, valid_session
+      end
+
+      #TODO: these seem to try to route to comment_url, instead of posts_comment_url??
+      #it "assigns the requested comment as @comment" do
+      #  User.create! valid_user_attributes
+      #  a_post = Post.create! valid_post_attributes
+      #  comment = Comment.create! valid_comment_attributes
+      #  put :update, {:id => comment.to_param, :comment => valid_comment_attributes}, valid_session
+      #  assigns(:comment).should eq(comment)
+      #end
+      #
+      #it "redirects to the post for the comment" do
+      #  User.create! valid_user_attributes
+      #  a_post = Post.create! valid_post_attributes
+      #  comment = Comment.create! valid_comment_attributes
+      #  put :update, {:id => comment.to_param, :comment => valid_comment_attributes}, valid_session
+      #  response.should redirect_to(a_post)
+      #end
+    end
+
+    #No invalid parameters (comments can be null)
+    #describe "with invalid params" do
+    #  it "assigns the comment as @comment" do
+    #    comment = Comment.create! valid_comment_attributes
+    #    # Trigger the behavior that occurs when invalid params are submitted
+    #    Comment.any_instance.stub(:save).and_return(false)
+    #    put :update, {:id => comment.to_param, :comment => {}}, valid_session
+    #    assigns(:comment).should eq(comment)
+    #  end
+    #
+    #  it "re-renders the 'edit' template" do
+    #    comment = Comment.create! valid_comment_attributes
+    #    # Trigger the behavior that occurs when invalid params are submitted
+    #    Comment.any_instance.stub(:save).and_return(false)
+    #    put :update, {:id => comment.to_param, :comment => {}}, valid_session
+    #    response.should render_template("edit")
+    #  end
+    #end
+  end
+
+  describe "DELETE destroy" do
+    it "destroys the requested comment" do
+      User.create! valid_user_attributes
+      Post.create! valid_post_attributes
+      comment = Comment.create! valid_comment_attributes
+      expect {
+        delete :destroy, {:id => comment.to_param}, valid_session
+      }.to change(Comment, :count).by(-1)
+    end
+
+    it "redirects to the comments list" do
+      User.create! valid_user_attributes
+      Post.create! valid_post_attributes
+      comment = Comment.create! valid_comment_attributes
+      delete :destroy, {:id => comment.to_param}, valid_session
+      response.should redirect_to(posts_url)
+    end
+  end
 
 end
