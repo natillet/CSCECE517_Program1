@@ -6,7 +6,7 @@
 <h2>Comments</h2>
 <%= render @post.comments  %>
 
-<% if !(@post.user_id == session[:user_id]) %>
+<% if session[:user_id] %>
 <h2>Add a comment:</h2>
 <%= render "comments/comment_form"  %>
 <% end %>
