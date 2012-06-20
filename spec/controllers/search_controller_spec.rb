@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# This test work on VCL environment
 describe SearchController do
 
   describe "GET 'index'" do
